@@ -302,7 +302,7 @@ const HomePage = () => {
               alt=""
               style={{ height: '20px' }}
             />
-            <strong className="me-auto text-dark">TemberZee</strong>
+            <strong className="me-auto text-dark">TimberZee</strong>
             <button type="button" className="btn-close" onClick={() => setShowToast(false)}></button>
           </Toast.Header>
           <Toast.Body className="text-white">

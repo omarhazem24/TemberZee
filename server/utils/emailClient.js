@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async (to, subject, htmlContent) => {
   try {
     const info = await transporter.sendMail({
-      from: `"TemberZee Shop" <${process.env.EMAIL_USER}>`,
+      from: `"TimberZee Shop" <${process.env.EMAIL_USER}>`,
       to: to,
       subject: subject,
       html: htmlContent,
@@ -30,7 +30,7 @@ const getWishlistTemplate = (product, user) => {
   return `
     <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
       <div style="background-color: #000; padding: 20px; text-align: center;">
-        <h1 style="color: #fff; margin: 0; font-size: 24px; letter-spacing: 2px;">TEMBERZEE</h1>
+        <h1 style="color: #fff; margin: 0; font-size: 24px; letter-spacing: 2px;">TIMBERZEE</h1>
       </div>
       
       <div style="padding: 30px;">
@@ -55,7 +55,7 @@ const getWishlistTemplate = (product, user) => {
       </div>
       
       <div style="background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; color: #999;">
-        <p>&copy; ${new Date().getFullYear()} TemberZee. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} TimberZee. All rights reserved.</p>
         <p>If you didn't request this, you can ignore this email.</p>
       </div>
     </div>

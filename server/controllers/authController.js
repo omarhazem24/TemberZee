@@ -76,7 +76,7 @@ const registerUser = async (req, res) => {
 
     // SEND WHATSAPP MESSAGE
     const fullPhoneNumber = `${countryCode}${phoneNumber}`;
-    const message = `Your verification code for TemberZee is: *${otp}*`;
+    const message = `Your verification code for TimberZee is: *${otp}*`;
     
     // Send asynchronously - don't block response
     sendWhatsAppMessage(fullPhoneNumber, message);

@@ -79,7 +79,7 @@ const Header = () => {
       <Navbar expand='lg' collapseOnSelect className="navbar">
         <Container fluid>
           <Navbar.Brand as={Link} to='/' className="d-flex align-items-center">
-             <img src="/images/z-logo.png" alt="TemberZee" style={{ height: '35px' }} />
+             <img src="/images/z-logo.png" alt="TimberZee" style={{ height: '35px' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>

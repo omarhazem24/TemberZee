@@ -8,7 +8,7 @@ const TermsPage = () => {
             
             <section className="mb-4">
                 <h4>1. Agreement to Terms</h4>
-                <p>These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity, and TemberZee, concerning your access to and use of our website.</p>
+                <p>These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity, and TimberZee, concerning your access to and use of our website.</p>
             </section>
 
             <section className="mb-4">

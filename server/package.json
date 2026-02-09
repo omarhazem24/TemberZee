@@ -1,7 +1,7 @@
 {
-  "name": "temberzee-server",
+  "name": "timberzee-server",
   "version": "1.0.0",
-  "description": "Backend for TemberZee E-commerce shop",
+  "description": "Backend for TimberZee E-commerce shop",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

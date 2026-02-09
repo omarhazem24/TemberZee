@@ -64,7 +64,7 @@ const Footer = () => {
         <Row className="mt-4">
           <Col className="text-center">
             <small className="text-muted">
-              &copy; {new Date().getFullYear()} TemberZee. All Rights Reserved.
+              &copy; {new Date().getFullYear()} TimberZee. All Rights Reserved.
             </small>
           </Col>
         </Row>

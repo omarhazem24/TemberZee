@@ -8,7 +8,7 @@ const PrivacyPolicyPage = () => {
             
             <section className="mb-4">
                 <h4>1. Introduction</h4>
-                <p>Welcome to TemberZee. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+                <p>Welcome to TimberZee. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
             </section>
 
             <section className="mb-4">
