@@ -57,8 +57,17 @@ const OrderListPage = () => {
                                     <span className="text-muted" style={{ fontSize: '0.8rem' }}>
                                         {new Date(order.createdAt).toLocaleDateString()}
                                     </span>
-                                    <Badge bg={order.isPaid ? "success" : "warning"} text={order.isPaid ? "light" : "dark"} className="rounded-1 fw-normal">
-                                        {order.isPaid ? 'PAID' : 'PENDING'}
+                                    <Badge 
+                                        bg={
+                                            order.orderStatus === 'delivered' ? 'success' :
+                                            order.orderStatus === 'canceled' ? 'danger' :
+                                            order.orderStatus === 'confirmed' ? 'info' :
+                                            'warning'
+                                        } 
+                                        text="light" 
+                                        className="rounded-1 fw-normal text-uppercase"
+                                    >
+                                        {order.orderStatus || 'PENDING'}
                                     </Badge>
                                 </Card.Header>
                                 <Card.Body className="px-3 py-2">
@@ -72,9 +81,9 @@ const OrderListPage = () => {
                                          <span className="fw-bold fs-5">EGP {order.totalPrice.toFixed(2)}</span>
                                      </div>
                                      <div className="d-flex justify-content-between align-items-center">
-                                         <span className="text-muted small">Status</span>
-                                         <span className={`fw-bold small ${order.isDelivered ? 'text-success' : 'text-primary'}`}>
-                                             {order.isDelivered ? 'DELIVERED' : 'IN PROGRESS'}
+                                         <span className="text-muted small">Payment</span>
+                                         <span className={`fw-bold small`}>
+                                             {order.paymentMethod}
                                          </span>
                                      </div>
                                 </Card.Body>

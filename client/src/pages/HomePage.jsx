@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, Button, Toast, ToastContainer } from 'react-bootstrap';
+import { Row, Col, Card, Button, Toast, ToastContainer, Carousel, Image, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ConfirmationToast from '../components/ConfirmationToast';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [slides, setSlides] = useState([]);
   const [showToast, setShowToast] = useState(false);
   const userInfo =  localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
   const location = useLocation();
   const navigate = useNavigate();
+
+  const fetchSlides = async () => {
+       try {
+           const { data } = await axios.get('/api/slides');
+           setSlides(data);
+       } catch (err) {
+           console.error(err);
+       }
+  };
 
   const fetchProducts = async () => {
     const keyword = new URLSearchParams(location.search).get('keyword') || '';
@@ -16,28 +28,35 @@ const HomePage = () => {
     setProducts(data);
   };
 
-  const createProductHandler = () => {
-      navigate('/admin/product/create');
-  };
-
   useEffect(() => {
     fetchProducts();
+    fetchSlides();
   }, [location.search]);
 
-  const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure?')) {
-      try {
-        const config = {
-           headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-           }
-        }
-        await axios.delete(`/api/products/${id}`, config);
-        fetchProducts();
-      } catch (error) {
-        alert(error.message);
-      }
-    }
+  const deleteHandler = (id) => {
+    toast(<ConfirmationToast 
+        message="Are you sure you want to delete this product?"
+        onConfirm={async () => {
+            try {
+                const config = {
+                   headers: {
+                    Authorization: `Bearer ${userInfo.token}`,
+                   }
+                }
+                await axios.delete(`/api/products/${id}`, config);
+                fetchProducts();
+                toast.success('Product deleted successfully');
+            } catch (error) {
+                toast.error(error.message);
+            }
+        }}
+    />, { 
+        position: "top-center",
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false
+    });
   };
   
   const addToCartHandler = (product) => {
@@ -164,11 +183,43 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="hero-banner">
-         <h1 className="hero-title">NEW ARRIVALS</h1>
-         <p className="hero-subtitle">SUMMER COLLECTION 2026</p>
-         <Button className="btn-black">SHOP NOW</Button>
-      </div>
+      {slides.length > 0 ? (
+          <div className="position-relative mb-5">
+              <Carousel className="custom-carousel" prevIcon={<span className="carousel-control-prev-icon" aria-hidden="true" />} nextIcon={<span className="carousel-control-next-icon" aria-hidden="true" />}>
+                  {slides.map(slide => (
+                      <Carousel.Item key={slide._id}>
+                          <div className="d-flex align-items-center justify-content-center bg-light" style={{ height: '500px', width: '100%', overflow: 'hidden' }}>
+                                <Image
+                                  className="d-block w-100 h-100"
+                                  src={slide.image}
+                                  alt={slide.title}
+                                  style={{ objectFit: 'cover' }}
+                                />
+                          </div>
+                      </Carousel.Item>
+                  ))}
+              </Carousel>
+              
+              {/* Overlay Content */}
+              <div className="position-absolute top-50 start-50 translate-middle text-center text-white p-4 rounded" style={{ zIndex: 10, backgroundColor: 'rgba(0,0,0,0.3)' }}>
+                    <h1 className="display-3 fw-bold mb-3" style={{ letterSpacing: '3px', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>NEW ARRIVALS</h1>
+                    <p className="lead mb-4" style={{ letterSpacing: '1px', textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>SUMMER COLLECTION 2026</p>
+                    <Link to="/shop">
+                        <Button variant="light" size="lg" className='px-5 py-3 rounded-0 fw-bold' style={{ letterSpacing: '2px' }}>SHOP NOW</Button>
+                    </Link>
+              </div>
+          </div>
+      ) : (
+          <div className="hero-banner mb-5 d-flex align-items-center justify-content-center text-center text-black" style={{ height: '400px', backgroundColor: '#f5f5f5' }}>
+            <Container>
+                <h1 className="display-3 fw-bold mb-3" style={{ letterSpacing: '3px' }}>NEW ARRIVALS</h1>
+                <p className="lead text-muted mb-4" style={{ letterSpacing: '1px' }}>SUMMER COLLECTION 2026</p>
+                <Link to="/shop">
+                     <Button variant="dark" size="lg" className='px-5 py-3 rounded-0' style={{ letterSpacing: '2px' }}>SHOP NOW</Button>
+                </Link>
+            </Container>
+          </div>
+      )}
 
       <Row className='align-items-center mb-4 mt-5'>
         <Col>
@@ -213,7 +264,14 @@ const HomePage = () => {
                         {product.name}
                     </Card.Title>
                     <Card.Text className="text-muted fw-bold mb-3">
-                        EGP {product.price}
+                        {product.isSaleActive && product.saleSold < product.saleLimit ? (
+                            <>
+                                <span className="text-decoration-line-through me-2 text-secondary">EGP {product.price}</span>
+                                <span className="text-danger">EGP {product.salePrice}</span>
+                            </>
+                        ) : (
+                            `EGP ${product.price}`
+                        )}
                     </Card.Text>
                     
                     <div className="mt-auto">
@@ -222,7 +280,8 @@ const HomePage = () => {
                             className="btn-black btn-sm w-100 rounded-0"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                addToCartHandler(product);
+                                const priceToUse = product.isSaleActive && product.saleSold < product.saleLimit ? product.salePrice : product.price;
+                                addToCartHandler({ ...product, price: priceToUse });
                             }}
                             >
                             <i className="fas fa-shopping-bag me-2"></i>ADD TO CART

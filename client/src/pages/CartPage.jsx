@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap';
+import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [loadingPay, setLoadingPay] = useState(false);
   
   const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const CartPage = () => {
       setCartItems(newItems);
       localStorage.setItem('cartItems', JSON.stringify(newItems));
       window.dispatchEvent(new Event('cartUpdated'));
+      toast.success('Item removed');
   };
 
   const updateQtyHandler = (itemToUpdate, newQty) => {
@@ -39,42 +40,32 @@ const CartPage = () => {
       }
   };
 
-  const checkoutHandler = async () => {
+  const checkoutHandler = () => {
       if(!userInfo) {
           navigate('/login');
           return;
       }
-      
-      try {
-          setLoadingPay(true);
-          const config = {
-              headers: { Authorization: `Bearer ${userInfo.token}` }
-          };
-          
-          // Request Paymob Payment Key
-          const { data } = await axios.post('/api/payment/create-payment-intent', { cartItems }, config);
-          
-          if(data.token && data.iframeId) {
-             // Save current cart order ID if returned or prepare to verify later
-             // Redirect to Paymob Iframe
-             window.location.href = `https://accept.paymobsolutions.com/api/acceptance/iframes/${data.iframeId}?payment_token=${data.token}`;
-          } else {
-             alert("Payment initialization failed. Please try again.");
-             setLoadingPay(false);
-          }
-
-      } catch (error) {
-          setLoadingPay(false);
-          alert('Error initiating checkout: ' + (error.response?.data?.message || error.message));
-      }
+      navigate('/payment');
   };
 
   // ... rest of component
 
 
+  const calculateShipping = (address) => {
+    if (!address || !address.state) return 0;
+    
+    const gov = address.state.trim().toLowerCase();
+    const zone90 = ['Alexandria', 'Beheira', 'Kafr El Sheikh', 'Kafr El-Sheikh', 'Gharbia', 'Monufia', 'Suez', 'Qalyubia', 'Dakahlia', 'Sharqia', 'Damietta', 'Port Said', 'Ismailia', 'Matruh'];
+    const zone70 = ['Cairo', 'Giza'];
+
+    if (zone70.some(z => gov === z.toLowerCase())) return 70;
+    if (zone90.some(z => gov === z.toLowerCase())) return 90;
+    return 120;
+  };
+
   const total = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2);
-  const taxPrice = Number((0.14 * total).toFixed(2)); // 14% VAT
-  const finalTotal = (Number(total) + taxPrice).toFixed(2);
+  const shippingPrice = (userInfo && cartItems.length > 0) ? calculateShipping(userInfo.address) : 0;
+  const finalTotal = (Number(total) + shippingPrice).toFixed(2);
 
   return (
     <div className="pt-4">
@@ -177,43 +168,37 @@ const CartPage = () => {
               <span className="text-muted">Subtotal</span>
               <span className="fw-bold">EGP {total}</span>
             </div>
-            <div className="d-flex justify-content-between mb-4">
-              <span className="text-muted">Estimated Tax (14%)</span>
-              <span>EGP {taxPrice}</span>
+            
+            <div className="d-flex justify-content-between mb-2">
+              <span className="text-muted">Shipping</span>
+              <span className="fw-bold">
+                 {userInfo ? `EGP ${shippingPrice}` : <span className="small fst-italic">Login to calculate</span>}
+              </span>
             </div>
             
             <hr />
             
             <div className="d-flex justify-content-between mb-4 align-items-center">
               <span className="fs-5 fw-bold">TOTAL</span>
-              <span className="fs-3 fw-bold" style={{ fontFamily: 'var(--font-heading)' }}>EGP {finalTotal}</span>
+              <span className="fs-3 fw-bold" style={{ fontFamily: 'var(--font-heading)' }}>
+                  EGP {finalTotal}
+              </span>
             </div>
 
             <Button
               type='button'
               className='btn-black w-100 py-3 rounded-0 fs-5'
-              disabled={cartItems.length === 0 || loadingPay}
+              disabled={cartItems.length === 0}
               onClick={checkoutHandler}
             >
-              {loadingPay ? (
-                  <>
-                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                     PROCESSING...
-                  </>
-              ) : 'CHECKOUT NOW'}
+              CHECKOUT NOW
             </Button>
             
-            <p className="mt-3 text-center text-muted small">
-                * Total excludes shipping fees which will be calculated at delivery.
-            </p>
-
-            <div className="mt-4 text-center text-muted" style={{ fontSize: '0.8rem' }}>
-                <p className="mb-2"><i className="fas fa-lock me-2"></i>Secure Checkout</p>
-                <div className="d-flex justify-content-center gap-2 text-dark fs-4 opacity-50">
-                    <i className="fab fa-cc-visa"></i>
-                    <i className="fab fa-cc-mastercard"></i>
-                </div>
-            </div>
+            {!userInfo && (
+                <p className="mt-3 text-center text-muted small">
+                    * Shipping Calculated at Checkout
+                </p>
+            )}
           </Card>
         </Col>
       </Row>

@@ -7,9 +7,11 @@ const cors = require('cors');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const userRoutes = require('./routes/userRoutes');
+const slideRoutes = require('./routes/slideRoutes');
+const couponRoutes = require('./routes/couponRoutes');
 
 const app = express();
 
@@ -17,10 +19,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/slides', slideRoutes);
+app.use('/api/coupons', couponRoutes);
 
 // Make uploads folder static
 const dirname = path.resolve();

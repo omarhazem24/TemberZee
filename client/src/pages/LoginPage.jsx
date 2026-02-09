@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -26,9 +27,10 @@ const LoginPage = () => {
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate('/');
       window.location.reload(); // Update header
+      toast.success('Successfully Logged In');
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || 'Invalid email or password');
+      toast.error(error.response?.data?.message || 'Invalid email or password');
     }
   };
 
@@ -77,6 +79,10 @@ const LoginPage = () => {
                 style={{ backgroundColor: 'transparent' }}
               ></Form.Control>
             </Form.Group>
+
+            <div className="d-flex justify-content-end mb-3">
+                <Link to='/forgot-password' className="text-muted text-decoration-none small">Forgot Password?</Link>
+            </div>
 
             <div className='d-grid gap-2 mt-4'>
               <Button type='submit' className='btn-black text-uppercase' size='lg' style={{ borderRadius: '0', padding: '15px' }}>

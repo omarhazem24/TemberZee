@@ -42,7 +42,7 @@ const EditProductPage = () => {
         };
 
         fetchProduct();
-    }, [id, navigate, userInfo]);
+    }, [id, navigate]);
 
     const uploadFileHandler = async (e) => {
         const files = Array.from(e.target.files);

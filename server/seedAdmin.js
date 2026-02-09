@@ -12,7 +12,9 @@ const importData = async () => {
     const adminExists = await User.findOne({ username: 'admin' });
 
     if (adminExists) {
-        console.log('Admin user already exists');
+        adminExists.password = 'Zxcv12341234';
+        await adminExists.save();
+        console.log('Admin password updated successfully');
         process.exit();
     }
 
@@ -21,10 +23,11 @@ const importData = async () => {
       lastName: 'User',
       username: 'admin',
       email: 'admin@example.com',
-      password: '123',
+      password: 'Zxcv12341234',
       role: 'admin',
       phoneNumber: '1234567890',
       isEmailVerified: true,
+      isPhoneVerified: true,
       address: {
           street: 'Admin St',
           city: 'Admin City',

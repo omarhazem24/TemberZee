@@ -2,6 +2,7 @@ import { Navbar, Nav, Container, NavDropdown, Form, Button, Badge, ListGroup } f
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const [keyword, setKeyword] = useState('');
@@ -54,6 +55,7 @@ const Header = () => {
   const logoutHandler = () => {
     localStorage.removeItem('userInfo');
     navigate('/login');
+    toast.success('Logged Out Successfully');
   };
 
   const submitHandler = (e) => {
@@ -129,6 +131,13 @@ const Header = () => {
 
               {/* Right Side Nav */}
               <div className="d-flex align-items-center ms-auto">
+                  {/* Wishlist Icon */}
+                  {userInfo && userInfo.role !== 'admin' && (
+                     <Nav.Link as={Link} to='/wishlist' className="position-relative me-3 text-secondary">
+                        <i className="far fa-heart fa-lg"></i>
+                     </Nav.Link>
+                  )}
+
                   {!(userInfo && userInfo.role === 'admin') && (
                     <Nav.Link as={Link} to='/cart' className="position-relative me-3">
                       <i className="fas fa-shopping-cart fa-lg"></i>
@@ -142,6 +151,21 @@ const Header = () => {
                   
                   {userInfo ? (
                     <NavDropdown title={userInfo.firstName.toUpperCase()} id='username' align="end">
+                      {userInfo.role === 'admin' && (
+                          <>
+                            <NavDropdown.Item as={Link} to='/admin/orders'>
+                              MANAGE ORDERS
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to='/admin/reviews'>
+                              REVIEWS & RATINGS
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to='/admin/carousel'>
+                              MANAGE SLIDES
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                          </>
+                      )}
+
                       {userInfo.role !== 'admin' && (
                           <NavDropdown.Item as={Link} to='/orders'>
                             MY ORDERS

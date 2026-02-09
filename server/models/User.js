@@ -25,6 +25,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    countryCode: {
+      type: String,
+      required: true,
+      default: '+20'
+    },
     password: {
       type: String,
       required: true,
@@ -44,9 +49,16 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    stripeCustomerId: {
-      type: String, // To store Stripe Customer ID for saving cards
-    },
+    phoneOtp: String,
+    phoneOtpExpires: Date,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
     role: {
       type: String,
       enum: ['buyer', 'admin'],
