@@ -20,7 +20,7 @@ describe('Product Endpoints', () => {
       username: 'adminuser',
       phoneNumber: '0000000000',
       email: 'admin@example.com',
-      password: 'password123',
+      password: 'Password@123',
     });
     
     await User.findOneAndUpdate({ email: 'admin@example.com' }, { role: 'admin' });
@@ -28,7 +28,7 @@ describe('Product Endpoints', () => {
     // Login to get token
     const adminLogin = await request(app).post('/api/auth/login').send({
       email: 'admin@example.com',
-      password: 'password123'
+      password: 'Password@123'
     });
     adminToken = adminLogin.body.token;
 
@@ -39,9 +39,17 @@ describe('Product Endpoints', () => {
       username: 'buyeruser',
       phoneNumber: '1111111111',
       email: 'buyer@example.com',
-      password: 'password123',
+      password: 'Password@123',
     });
-    buyerToken = buyerRes.body.token;
+    // Need to verify mock buyer to get token? No, signup doesn't return token anymore.
+    // Need to login as buyer.
+    await User.findOneAndUpdate({ email: 'buyer@example.com' }, { isPhoneVerified: true });
+    
+    const buyerLogin = await request(app).post('/api/auth/login').send({
+        email: 'buyer@example.com',
+        password: 'Password@123'
+    });
+    buyerToken = buyerLogin.body.token;
   });
 
   it('should allow admin to create a product', async () => {

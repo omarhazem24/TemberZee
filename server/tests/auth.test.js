@@ -1,15 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const db = require('./db');
-
-// Mock Stripe
-jest.mock('stripe', () => {
-  return jest.fn(() => ({
-     customers: {
-        create: jest.fn(() => Promise.resolve({ id: 'cus_test123' }))
-     }
-  }));
-});
+const User = require('../models/User');
 
 // Jest hook: runs before all tests
 beforeAll(async () => await db.connect());
@@ -28,16 +20,12 @@ describe('Auth Endpoints', () => {
       username: 'testbuyer',
       email: 'buyer@example.com',
       phoneNumber: '1234567890',
-      password: 'password123',
+      password: 'Password@123',
     });
-    // If Stripe fails (due to mock missing), we might get 500, lets ensure stripe mock is present or handled
-    // If controllers catch block is good, it should work.
-    // NOTE: This test might fail if Stripe API call attempts to run without network or mock.
-    // Ideally we mock stripe in this test file too if it's not global.
-    // For now assuming existing flow.
+    
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('token');
-    expect(res.body.role).toEqual('buyer');
+    expect(res.body).toHaveProperty('requiresOtp');
+    expect(res.body.requiresOtp).toBe(true);
   });
 
   it('should login an existing user', async () => {
@@ -48,12 +36,15 @@ describe('Auth Endpoints', () => {
       username: 'loginuser',
       phoneNumber: '5555555555',
       email: 'login@example.com',
-      password: 'password123',
+      password: 'Password@123',
     });
+
+    // Manually verify user phone to allow login
+    await User.findOneAndUpdate({ email: 'login@example.com' }, { isPhoneVerified: true });
 
     const res = await request(app).post('/api/auth/login').send({
       email: 'login@example.com',
-      password: 'password123',
+      password: 'Password@123',
     });
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('token');
@@ -66,7 +57,7 @@ describe('Auth Endpoints', () => {
       username: 'protectuser',
       phoneNumber: '9999999999',
       email: 'protect@example.com',
-      password: 'password123',
+      password: 'Password@123',
     });
 
     const res = await request(app).post('/api/auth/login').send({
