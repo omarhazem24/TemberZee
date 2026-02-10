@@ -167,9 +167,14 @@ const Header = () => {
                       )}
 
                       {userInfo.role !== 'admin' && (
-                          <NavDropdown.Item as={Link} to='/orders'>
-                            MY ORDERS
-                          </NavDropdown.Item>
+                          <>
+                            <NavDropdown.Item as={Link} to='/profile'>
+                              MY PROFILE
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to='/orders'>
+                              MY ORDERS
+                            </NavDropdown.Item>
+                          </>
                       )}
                       <NavDropdown.Item onClick={logoutHandler}>
                         LOGOUT

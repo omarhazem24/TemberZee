@@ -14,14 +14,7 @@ On a lighter note, we coordinated our code style to be consistent so it would be
 ## Screenshots
 Below are some sample screenshots from our project UI:
 
-![Home Page](./screenshots/home.png)
-*(Placeholder for Home Page Screenshot)*
 
-![Product Page](./screenshots/product.png)
-*(Placeholder for Product Page Screenshot)*
-
-![Admin Dashboard](./screenshots/admin.png)
-*(Placeholder for Admin Dashboard Screenshot)*
 
 ## Tech/Framework
 As mentioned before, the MERN stack, a JavaScript technology suite powers this project.
