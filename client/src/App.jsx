@@ -26,12 +26,13 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import ReturnPolicyPage from './pages/ReturnPolicyPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ForgotPasswordOtpPage from './pages/ForgotPasswordOtpPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const AppContent = () => {
   const location = useLocation();
-  const hideHeader = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname.startsWith('/reset-password');
-  const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname.startsWith('/reset-password');
+  const hideHeader = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname === '/forgot-password-otp' || location.pathname.startsWith('/reset-password');
+  const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname === '/forgot-password-otp' || location.pathname.startsWith('/reset-password');
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -46,6 +47,7 @@ const AppContent = () => {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+            <Route path='/forgot-password-otp' element={<ForgotPasswordOtpPage />} />
             <Route path='/reset-password/:resetToken' element={<ResetPasswordPage />} />
             <Route path='/cart' element={<CartPage />} />
             <Route path='/payment' element={<PaymentMethodPage />} />
