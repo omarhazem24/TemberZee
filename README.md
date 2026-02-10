@@ -14,6 +14,23 @@ On a lighter note, we coordinated our code style to be consistent so it would be
 ## Screenshots
 Below are some sample screenshots from our project UI:
 
+<img width="1526" height="588" alt="Screenshot 2026-02-10 034016" src="https://github.com/user-attachments/assets/7cf505e2-d5cb-473a-a608-03174d0d7795" />
+<img width="1241" height="924" alt="image" src="https://github.com/user-attachments/assets/a058a974-738c-4721-98ac-412cedb7e90f" />
+<img width="1526" height="588" alt="image" src="https://github.com/user-attachments/assets/6146c801-f8af-47c0-8e69-2d28c2bb12d0" />
+<img width="260" height="177" alt="Screenshot 2026-02-10 034812" src="https://github.com/user-attachments/assets/fa5aad76-00e2-4dcd-905c-2d78269f1d06" />
+<img width="1351" height="490" alt="Screenshot 2026-02-10 034536" src="https://github.com/user-attachments/assets/f9be3abf-1a14-4452-928a-a6a1f581fae2" />
+<img width="1374" height="491" alt="Screenshot 2026-02-10 034527" src="https://github.com/user-attachments/assets/40e3fb9a-e707-426f-ac61-fb9f1646a736" />
+<img width="1609" height="291" alt="Screenshot 2026-02-10 034521" src="https://github.com/user-attachments/assets/75193182-a50b-443d-9e06-fdbe56f28e1a" />
+<img width="1918" height="957" alt="Screenshot 2026-02-10 034516" src="https://github.com/user-attachments/assets/54b410be-3b4f-4661-b553-d88da9dcc67a" />
+<img width="1019" height="661" alt="Screenshot 2026-02-10 034429" src="https://github.com/user-attachments/assets/5569d725-9d9b-413e-8624-91d20844a039" />
+<img width="1121" height="957" alt="Screenshot 2026-02-10 034424" src="https://github.com/user-attachments/assets/681e6e3b-ddaa-49ed-a217-81e740c37ebf" />
+<img width="1085" height="464" alt="Screenshot 2026-02-10 034105" src="https://github.com/user-attachments/assets/2cf65895-fa2b-4bbf-b680-65b5ccb901dc" />
+<img width="1426" height="212" alt="Screenshot 2026-02-10 034059" src="https://github.com/user-attachments/assets/bb33a740-287e-456e-982f-8288ab990204" />
+<img width="1517" height="848" alt="Screenshot 2026-02-10 034049" src="https://github.com/user-attachments/assets/4ad5c6e6-28b0-43c8-8719-a8af03f633e1" />
+<img width="1439" height="461" alt="Screenshot 2026-02-10 034036" src="https://github.com/user-attachments/assets/2ba8d587-7d8d-4f3d-89cc-4a9bfb6f7d17" />
+<img width="1466" height="398" alt="Screenshot 2026-02-10 034029" src="https://github.com/user-attachments/assets/4b90bb97-24fc-4bf1-b65b-b88139673d5c" />
+<img width="1379" height="295" alt="Screenshot 2026-02-10 034024" src="https://github.com/user-attachments/assets/0618d010-9a2e-4e0f-8716-1049e910012c" />
+<img width="857" height="895" alt="Screenshot 2026-02-10 034826" src="https://github.com/user-attachments/assets/c37409ab-1e95-4d8a-a54d-dae8c26dcdbe" />
 
 
 ## Tech/Framework
