@@ -168,10 +168,16 @@ const verifyOtp = async (req, res) => {
 // @route   POST /api/auth/forgot-password
 // @access  Public
 const forgotPassword = async (req, res) => {
-  const { email } = req.body;
+  const { identifier } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    // Find user by username OR phoneNumber
+    const user = await User.findOne({
+        $or: [
+            { username: identifier },
+            { phoneNumber: identifier }
+        ]
+    });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -192,10 +198,6 @@ const forgotPassword = async (req, res) => {
     // Attempt to send WA message
     const waResult = await sendWhatsAppMessage(fullPhoneNumber, message);
     
-    // We'll return 200 regardless of immediate WA result because it's async, 
-    // or we can handle error if we trust the return value.
-    // The previous implementation didn't await, but here we might want to check if phone is valid.
-    
     res.status(200).json({ success: true, data: 'OTP sent to WhatsApp' });
 
   } catch (error) {
@@ -207,10 +209,16 @@ const forgotPassword = async (req, res) => {
 // @route   POST /api/auth/verify-reset-otp
 // @access  Public
 const verifyResetOtp = async (req, res) => {
-  const { email, otp } = req.body;
+  const { identifier, otp } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    // Find user by username OR phoneNumber
+    const user = await User.findOne({
+        $or: [
+            { username: identifier },
+            { phoneNumber: identifier }
+        ]
+    });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
