@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { fileToBase64 } from '../utils/fileToBase64';
 
 const EditProductPage = () => {
     const { id } = useParams();
@@ -49,18 +50,10 @@ const EditProductPage = () => {
         setUploading(true);
 
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            };
-
             const uploadedUrls = [];
             for (const file of files) {
-                const formData = new FormData();
-                formData.append('image', file);
-                const { data } = await axios.post('/api/upload', formData, config);
-                uploadedUrls.push(data);
+                const base64 = await fileToBase64(file);
+                uploadedUrls.push(base64);
             }
             
             setImages(prev => [...prev, ...uploadedUrls]);

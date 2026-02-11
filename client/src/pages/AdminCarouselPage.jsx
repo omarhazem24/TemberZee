@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ConfirmationToast from '../components/ConfirmationToast';
 import { getImageUrl } from '../utils/imagePath';
+import { fileToBase64 } from '../utils/fileToBase64';
 
 const AdminCarouselPage = () => {
     const [slides, setSlides] = useState([]);
@@ -34,19 +35,11 @@ const AdminCarouselPage = () => {
 
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
         setUploading(true);
 
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${userInfo.token}`,
-                },
-            };
-            const { data } = await axios.post('/api/upload', formData, config);
-            setImage(data);
+            const base64 = await fileToBase64(file);
+            setImage(base64);
             setUploading(false);
         } catch (error) {
             console.error(error);
