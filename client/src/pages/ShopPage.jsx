@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form, Accordion, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getImageUrl } from '../utils/imagePath';
 
 const ShopPage = () => {
   const [products, setProducts] = useState([]);
@@ -182,7 +183,7 @@ const ShopPage = () => {
                                 <div style={{ position: 'relative', overflow: 'hidden', paddingBottom: '110%', backgroundColor: '#f8f9fa' }}>
                                     <Card.Img 
                                         variant="top" 
-                                        src={product.image} 
+                                        src={getImageUrl(product.image)} 
                                         onError={(e) => { e.target.src = "https://placehold.co/600x600?text=No+Image"; }}
                                         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} 
                                     />

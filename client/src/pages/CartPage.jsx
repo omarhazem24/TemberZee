@@ -3,6 +3,7 @@ import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imagePath';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -102,7 +103,7 @@ const CartPage = () => {
                   <Col md={6} className="d-flex align-items-center">
                     <Link to={`/product/${item.product}`}>
                         <div style={{ width: '100px', height: '100px', overflow: 'hidden', backgroundColor: '#f9f9f9' }} className="me-3">
-                            <Image src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                            <Image src={getImageUrl(item.image)} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </div>
                     </Link>
                     <div>

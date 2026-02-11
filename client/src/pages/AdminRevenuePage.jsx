@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Table, Badge, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import { getImageUrl } from '../utils/imagePath';
 
 const AdminRevenuePage = () => {
     const [analytics, setAnalytics] = useState(null);
@@ -135,7 +136,7 @@ const AdminRevenuePage = () => {
                                             <td className="ps-4">
                                                 <div className="d-flex align-items-center">
                                                     <img 
-                                                        src={prod.image} 
+                                                        src={getImageUrl(prod.image)} 
                                                         alt={prod.name} 
                                                         className="rounded me-3 border"
                                                         style={{ width: '40px', height: '40px', objectFit: 'cover' }}

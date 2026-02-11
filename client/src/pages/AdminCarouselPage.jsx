@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ConfirmationToast from '../components/ConfirmationToast';
+import { getImageUrl } from '../utils/imagePath';
 
 const AdminCarouselPage = () => {
     const [slides, setSlides] = useState([]);
@@ -150,7 +151,7 @@ const AdminCarouselPage = () => {
                     {slides.map((slide) => (
                         <tr key={slide._id}>
                             <td style={{ width: '200px' }}>
-                                <Image src={slide.image} alt={slide.title} fluid style={{ maxHeight: '100px' }} />
+                                <Image src={getImageUrl(slide.image)} alt={slide.title} fluid style={{ maxHeight: '100px' }} />
                             </td>
                             <td>{slide.title}</td>
                             <td>

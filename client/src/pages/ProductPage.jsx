@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button, Form, Container, Badge, Alert, Modal, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imagePath';
 
 const ProductPage = () => {
   const [product, setProduct] = useState({});
@@ -156,7 +157,7 @@ const ProductPage = () => {
                         onClick={() => setActiveImage(img)}
                     >
                          <Image 
-                            src={img} 
+                            src={getImageUrl(img)} 
                             fluid 
                             onError={(e) => { e.target.src = "https://placehold.co/100" }} 
                         />
@@ -166,7 +167,7 @@ const ProductPage = () => {
                 // Fallback main image thumbnail
                 product.image && (
                      <div className="border rounded p-1 border-dark" style={{ cursor: 'pointer' }}>
-                         <Image src={product.image} fluid />
+                         <Image src={getImageUrl(product.image)} fluid />
                     </div>
                 )
             )}
@@ -176,7 +177,7 @@ const ProductPage = () => {
         <Col md={5}>
           <div className="position-relative">
              <Image 
-                src={activeImage || product.image} 
+                src={getImageUrl(activeImage || product.image)} 
                 alt={product.name} 
                 fluid 
                 className="w-100" 

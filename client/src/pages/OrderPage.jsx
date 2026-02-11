@@ -3,6 +3,7 @@ import { Row, Col, ListGroup, Image, Card, Container, Badge, Alert, Button } fro
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imagePath';
 
 const OrderPage = () => {
   const { id } = useParams();
@@ -116,7 +117,7 @@ const OrderPage = () => {
                     <ListGroup.Item key={index} className="py-3 px-4 border-top">
                       <Row className="align-items-center">
                         <Col xs={3} md={2}>
-                          <Image src={item.image} alt={item.name} fluid rounded className="border" />
+                          <Image src={getImageUrl(item.image)} alt={item.name} fluid rounded className="border" />
                         </Col>
                         <Col>
                           <Link to={`/product/${item.product}`} className="text-decoration-none text-dark fw-bold h6">

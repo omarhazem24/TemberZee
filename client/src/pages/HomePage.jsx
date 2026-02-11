@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ConfirmationToast from '../components/ConfirmationToast';
+import { getImageUrl } from '../utils/imagePath';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -128,7 +129,7 @@ const HomePage = () => {
                             <div style={{ position: 'relative', overflow: 'hidden', paddingBottom: '100%', backgroundColor: '#f8f9fa' }}>
                                 <Card.Img 
                                     variant="top" 
-                                    src={product.image} 
+                                    src={getImageUrl(product.image)} 
                                     onError={(e) => {
                                       e.target.onerror = null; 
                                       e.target.src = "https://placehold.co/600x600?text=No+Image";
@@ -191,7 +192,7 @@ const HomePage = () => {
                           <div className="d-flex align-items-center justify-content-center bg-light" style={{ height: '500px', width: '100%', overflow: 'hidden' }}>
                                 <Image
                                   className="d-block w-100 h-100"
-                                  src={slide.image}
+                                  src={getImageUrl(slide.image)}
                                   alt={slide.title}
                                   style={{ objectFit: 'cover' }}
                                 />
@@ -244,7 +245,7 @@ const HomePage = () => {
                 <div style={{ position: 'relative', overflow: 'hidden', paddingBottom: '100%', backgroundColor: '#f8f9fa' }}>
                     <Card.Img 
                         variant="top" 
-                        src={product.image} 
+                        src={getImageUrl(product.image)} 
                         onError={(e) => {
                             e.target.onerror = null; 
                             e.target.src = "https://placehold.co/600x600?text=No+Image";

@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imagePath';
 
 const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -91,7 +92,7 @@ const WishlistPage = () => {
                           </Button>
 
                           <Link to={`/product/${product._id}`} className="text-decoration-none text-dark">
-                              <Card.Img variant="top" src={product.image} style={{ height: '200px', objectFit: 'cover' }} />
+                              <Card.Img variant="top" src={getImageUrl(product.image)} style={{ height: '200px', objectFit: 'cover' }} />
                               <Card.Body className="d-flex flex-column">
                                   <Card.Title as="div" className="mb-2"><strong>{product.name}</strong></Card.Title>
                                   <Card.Text as="h5" className="mb-3">EGP {product.price}</Card.Text>

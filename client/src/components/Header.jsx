@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../utils/imagePath';
 
 const Header = () => {
   const [keyword, setKeyword] = useState('');
@@ -117,7 +118,7 @@ const Header = () => {
                                     onClick={() => suggestionHandler(product._id)}
                                     className="d-flex align-items-center border-0"
                                 >
-                                    <img src={product.image} alt={product.name} style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px', borderRadius: '5px' }} />
+                                    <img src={getImageUrl(product.image)} alt={product.name} style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px', borderRadius: '5px' }} />
                                     <div>
                                         <div className="fw-bold" style={{ fontSize: '0.9rem' }}>{product.name}</div>
                                         <div className="text-muted" style={{ fontSize: '0.8rem' }}>EGP {product.price}</div>

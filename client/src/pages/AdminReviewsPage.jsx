@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col, Table, Card, Spinner, Alert, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { getImageUrl } from '../utils/imagePath';
 
 const AdminReviewsPage = () => {
     const [reviews, setReviews] = useState([]);
@@ -57,7 +58,7 @@ const AdminReviewsPage = () => {
                                      {topProducts.map((product) => (
                                          <tr key={product._id}>
                                              <td className="ps-3" style={{ width: '60px' }}>
-                                                 <img src={product.image} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} className="rounded" />
+                                                 <img src={getImageUrl(product.image)} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} className="rounded" />
                                              </td>
                                              <td>
                                                  <div className="fw-bold">{product.name}</div>
